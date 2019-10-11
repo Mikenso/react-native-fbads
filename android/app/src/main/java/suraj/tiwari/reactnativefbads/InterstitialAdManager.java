@@ -13,8 +13,10 @@ import com.facebook.react.bridge.ReactMethod;
 public class InterstitialAdManager extends ReactContextBaseJavaModule implements InterstitialAdListener, LifecycleEventListener {
 
   private Promise mPromise;
+  private Promise preloadedPromise;
   private boolean mDidClick = false;
   private InterstitialAd mInterstitial;
+  private InterstitialAd preloadedInterstitial;
 
   public InterstitialAdManager(ReactApplicationContext reactContext) {
     super(reactContext);
@@ -33,6 +35,26 @@ public class InterstitialAdManager extends ReactContextBaseJavaModule implements
     mInterstitial = new InterstitialAd(reactContext, placementId);
     mInterstitial.setAdListener(this);
     mInterstitial.loadAd();
+  }
+
+  @ReactMethod
+  public void loadAd(String placementId, Promise p) {
+    if (preloadedPromise != null) {
+      p.reject("E_FAILED_TO_SHOW", "Only one load method can be called at once");
+      return;
+    }
+    ReactApplicationContext reactContext = this.getReactApplicationContext();
+
+    preloadedPromise = p;
+    preloadedInterstitial = new InterstitialAd(reactContext, placementId);
+    preloadedInterstitial.loadAd();
+  }
+
+  @ReactMethod
+  public void showPreloadedAd() {
+    if (preloadedInterstitial != null && preloadedInterstitial.isAdLoaded()) {
+      preloadedInterstitial.show();
+    }
   }
 
   @Override

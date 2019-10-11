@@ -8,5 +8,11 @@ export default {
    */
   showAd(placementId: string): Promise<boolean> {
     return CTKInterstitialAdManager.showAd(placementId);
-  }
+  },
+  loadAd(placementId: string): Promise<boolean> {
+    return CTKInterstitialAdManager.loadAd(placementId);
+  },
+  showPreloadedAd() {
+    return CTKInterstitialAdManager.showPreloadedAd();
+  },
 };
