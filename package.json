@@ -13,7 +13,7 @@
     "example": "example"
   },
   "scripts": {
-    "prepare": "tsc --project .",
+    "tsc": "tsc --project .",
     "lint": "tslint --project ."
   },
   "author": "Suraj Tiwari <surajtiwari020@gmail.com>",
