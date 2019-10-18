@@ -10,7 +10,7 @@
   "main": "./src/index.ts",
   "typings": "dist/types/index.d.ts",
   "directories": {
-    "example": "example"
+    "example": "example" 
   },
   "scripts": {
     "tsc": "tsc --project .",
